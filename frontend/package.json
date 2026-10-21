@@ -1,0 +1,28 @@
+{
+  "name": "sahi-sahi-forms-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sahi-Sahi survey forms (React + Vite static SPA)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2",
+    "vite": "^6.4.2"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

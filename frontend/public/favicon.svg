@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Clip to a perfect circle -->
+    <clipPath id="round">
+      <circle cx="256" cy="256" r="248"/>
+    </clipPath>
+  </defs>
+
+  <!-- Outer lime-green glow ring (matches logo's outer ring) -->
+  <circle cx="256" cy="256" r="248" fill="#b5e853" />
+  <!-- Inner dark green ring -->
+  <circle cx="256" cy="256" r="236" fill="#1a6b2e" />
+  <!-- Inner radial glow (lime centre) -->
+  <radialGradient id="glow" cx="50%" cy="45%" r="55%">
+    <stop offset="0%" stop-color="#c8f542"/>
+    <stop offset="60%" stop-color="#2d8a3e"/>
+    <stop offset="100%" stop-color="#1a5c28"/>
+  </radialGradient>
+  <circle cx="256" cy="256" r="228" fill="url(#glow)" />
+
+  <!-- ── Wicker basket body ── -->
+  <!-- Basket trapezoid shape -->
+  <path d="M148 310 Q148 390 256 390 Q364 390 364 310 L340 240 L172 240 Z"
+        fill="#c8860a" stroke="#7a4f00" stroke-width="4"/>
+  <!-- Basket weave lines horizontal -->
+  <line x1="158" y1="265" x2="354" y2="265" stroke="#7a4f00" stroke-width="3" opacity="0.6"/>
+  <line x1="152" y1="290" x2="360" y2="290" stroke="#7a4f00" stroke-width="3" opacity="0.6"/>
+  <line x1="148" y1="315" x2="364" y2="315" stroke="#7a4f00" stroke-width="3" opacity="0.6"/>
+  <line x1="150" y1="340" x2="362" y2="340" stroke="#7a4f00" stroke-width="3" opacity="0.6"/>
+  <line x1="154" y1="365" x2="358" y2="365" stroke="#7a4f00" stroke-width="3" opacity="0.6"/>
+  <!-- Basket weave lines vertical -->
+  <line x1="185" y1="240" x2="170" y2="390" stroke="#7a4f00" stroke-width="2.5" opacity="0.5"/>
+  <line x1="215" y1="240" x2="205" y2="390" stroke="#7a4f00" stroke-width="2.5" opacity="0.5"/>
+  <line x1="245" y1="240" x2="240" y2="390" stroke="#7a4f00" stroke-width="2.5" opacity="0.5"/>
+  <line x1="275" y1="240" x2="272" y2="390" stroke="#7a4f00" stroke-width="2.5" opacity="0.5"/>
+  <line x1="305" y1="240" x2="307" y2="390" stroke="#7a4f00" stroke-width="2.5" opacity="0.5"/>
+  <line x1="335" y1="240" x2="342" y2="390" stroke="#7a4f00" stroke-width="2.5" opacity="0.5"/>
+  <!-- Basket rim -->
+  <rect x="148" y="232" width="216" height="18" rx="9"
+        fill="#e09c1a" stroke="#7a4f00" stroke-width="3"/>
+
+  <!-- ── Big checkmark (white/lime, behind vegetables) ── -->
+  <path d="M178 290 L230 355 L345 210"
+        fill="none" stroke="white" stroke-width="38" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+  <path d="M178 290 L230 355 L345 210"
+        fill="none" stroke="#c8f542" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+
+  <!-- ── Vegetables (on top of basket rim) ── -->
+
+  <!-- Leafy greens (back-left) -->
+  <ellipse cx="196" cy="210" rx="28" ry="38" fill="#2d8a3e" transform="rotate(-20 196 210)"/>
+  <ellipse cx="210" cy="195" rx="22" ry="34" fill="#3aaa4e" transform="rotate(-5 210 195)"/>
+  <ellipse cx="228" cy="188" rx="20" ry="36" fill="#2d8a3e" transform="rotate(10 228 188)"/>
+
+  <!-- Tomato (centre) -->
+  <circle cx="256" cy="228" r="32" fill="#e03020"/>
+  <circle cx="256" cy="228" r="32" fill="none" stroke="#b02010" stroke-width="2"/>
+  <!-- Tomato highlight -->
+  <ellipse cx="244" cy="216" rx="10" ry="7" fill="rgba(255,255,255,0.35)" transform="rotate(-20 244 216)"/>
+  <!-- Tomato stem -->
+  <path d="M256 196 Q260 188 268 186" fill="none" stroke="#2d8a3e" stroke-width="4" stroke-linecap="round"/>
+  <ellipse cx="262" cy="194" rx="8" ry="5" fill="#3aaa4e" transform="rotate(-30 262 194)"/>
+
+  <!-- Garlic (right of tomato) -->
+  <ellipse cx="300" cy="232" rx="22" ry="26" fill="#f0ece0" stroke="#c8b890" stroke-width="2"/>
+  <path d="M300 206 Q305 198 308 196" fill="none" stroke="#8a7a50" stroke-width="3" stroke-linecap="round"/>
+  <!-- Garlic clove lines -->
+  <path d="M292 220 Q300 215 308 220" fill="none" stroke="#c8b890" stroke-width="1.5"/>
+  <path d="M289 230 Q300 224 311 230" fill="none" stroke="#c8b890" stroke-width="1.5"/>
+
+  <!-- Carrot (far right) -->
+  <path d="M332 195 Q348 210 340 250 Q336 260 330 258 Q322 256 322 244 Q316 210 332 195Z"
+        fill="#f07820"/>
+  <path d="M332 195 Q340 185 350 182 Q345 192 338 196Z" fill="#2d8a3e"/>
+  <path d="M326 210 Q334 208 338 215" fill="none" stroke="#c85a10" stroke-width="1.5"/>
+  <path d="M324 225 Q332 222 337 228" fill="none" stroke="#c85a10" stroke-width="1.5"/>
+
+  <!-- Onion / purple veg (far left) -->
+  <ellipse cx="186" cy="240" rx="18" ry="20" fill="#9060b0" stroke="#6040a0" stroke-width="2"/>
+  <ellipse cx="180" cy="232" rx="6" ry="4" fill="rgba(255,255,255,0.25)"/>
+
+  <!-- ── Sparkle dots ── -->
+  <circle cx="160" cy="170" r="4" fill="white" opacity="0.8"/>
+  <circle cx="355" cy="155" r="3" fill="white" opacity="0.7"/>
+  <circle cx="380" cy="220" r="2.5" fill="white" opacity="0.6"/>
+  <circle cx="140" cy="260" r="2" fill="white" opacity="0.5"/>
+  <circle cx="310" cy="148" r="3.5" fill="white" opacity="0.65"/>
+</svg>

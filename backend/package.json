@@ -1,0 +1,29 @@
+{
+  "name": "sahi-sahi-forms-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sahi-Sahi survey forms API (Express + MongoDB). Shares the main MongoDB database, deployed on its own.",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --env-file-if-exists=.env src/index.ts",
+    "build": "esbuild src/index.ts --bundle --platform=node --format=esm --target=node22 --packages=external --sourcemap --outfile=dist/index.js",
+    "start": "node --env-file-if-exists=.env --enable-source-maps dist/index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongodb": "^6.21.0",
+    "nodemailer": "^10.1.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^22.10.2",
+    "@types/nodemailer": "^8.0.2",
+    "esbuild": "^0.25.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
