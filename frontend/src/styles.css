@@ -95,11 +95,11 @@ legend { display: flex; align-items: center; gap: 10px; padding: 0; margin-botto
 .hi.lead { font-size: 15px; margin: 0 0 8px; }
 .legend-hi { font-family: 'Noto Sans Devanagari', 'Nirmala UI', 'Mangal', sans-serif; font-size: 14px; font-weight: 600; color: var(--muted); }
 
-input[type='text'], input[type='email'], select, textarea {
+input[type='text'], input[type='email'], input[type='tel'], select, textarea {
   width: 100%; min-height: 46px; padding: 12px 14px; font: inherit; font-size: 16px; color: inherit;
   background: #fbfdf9; border: 1.5px solid #cfdacb; border-radius: 10px;
 }
-input[type='text']:focus, input[type='email']:focus, select:focus, textarea:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(46, 125, 50, .18); }
+input[type='text']:focus, input[type='email']:focus, input[type='tel']:focus, select:focus, textarea:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(46, 125, 50, .18); }
 [aria-invalid='true'] { border-color: var(--danger) !important; }
 textarea { resize: vertical; }
 .err { color: var(--danger); font-size: 13px; }

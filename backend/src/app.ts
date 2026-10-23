@@ -3,6 +3,7 @@ import { getDb } from './db';
 import { FORM_KINDS, SCHEMAS, type FormKind } from './schemas';
 import { sendOtp, tokenValidFor, verifyOtp } from './otp';
 import { parseForm } from './validate';
+import { verifiedPhoneFromToken } from './firebase';
 
 const COLLECTIONS: Record<FormKind, string> = {
   customer: 'formCustomerResponses',
@@ -138,9 +139,13 @@ app.post('/api/forms/:kind', submitLimit, async (req, res) => {
     if (!tokenValidFor(req.body.emailToken, parsed.data.email as string)) {
       return res.status(400).json({ error: 'Please verify your email address first', fields: { email: 'Verify your email' } });
     }
+    if ((await verifiedPhoneFromToken(req.body.phoneToken)) !== `+91${parsed.data.phone}`) {
+      return res.status(400).json({ error: 'Please verify your mobile number first', fields: { phone: 'Verify your mobile number' } });
+    }
     const { insertedId } = await getDb().collection(COLLECTIONS[kind]).insertOne({
       ...parsed.data,
       emailVerified: true,
+      phoneVerified: true,
       source: 'forms',
       createdAt: new Date(),
     });

@@ -7,7 +7,8 @@ export default defineConfig(({ mode }) => {
   const target = env.DEV_API_PROXY_TARGET || 'http://localhost:4000';
   return {
     plugins: [react()],
-    server: { port: 5174, proxy: { '/api': { target, changeOrigin: false } } },
+    // strictPort: a silent fallback to 5175 would be an origin the API doesn't allow (CORS/403).
+    server: { port: 5174, strictPort: true, proxy: { '/api': { target, changeOrigin: false } } },
     preview: { port: 4174, proxy: { '/api': { target, changeOrigin: false } } },
     build: { outDir: 'dist', emptyOutDir: true },
   };
