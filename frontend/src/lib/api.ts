@@ -25,5 +25,3 @@ async function post<T>(path: string, payload: unknown): Promise<T> {
 }
 
 export const submitForm = (kind: string, values: Record<string, unknown>) => post<unknown>(`/api/forms/${kind}`, values);
-export const sendEmailCode = (email: string) => post<unknown>('/api/email/send-code', { email });
-export const verifyEmailCode = (email: string, code: string) => post<{ token: string }>('/api/email/verify-code', { email, code });

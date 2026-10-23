@@ -2,7 +2,6 @@ import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { FormError, submitForm } from '../lib/api';
 import { FORMS, type FieldSpec } from '../lib/specs';
-import EmailVerify from './EmailVerify';
 import PhoneVerify, { normalizePhone } from './PhoneVerify';
 
 type Values = Record<string, string | string[] | boolean>;
@@ -28,7 +27,6 @@ export default function SurveyPage({ kind }: { kind: keyof typeof FORMS }) {
   const [formError, setFormError] = useState('');
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
-  const [verified, setVerified] = useState({ email: '', token: '' });
   const [phoneVerified, setPhoneVerified] = useState({ phone: '', token: '' });
 
   const set = (key: string, v: Values[string]) => {
@@ -43,8 +41,6 @@ export default function SurveyPage({ kind }: { kind: keyof typeof FORMS }) {
       const msg = validateClient(f, values[f.key]);
       if (msg) found[f.key] = msg;
     }
-    const email = (values.email as string).trim().toLowerCase();
-    if (!found.email && (!verified.token || verified.email !== email)) found.email = 'Please verify your email with the code we send';
     const phone = normalizePhone(values.phone as string);
     if (!found.phone && (!phoneVerified.token || phoneVerified.phone !== phone)) found.phone = 'Please verify your mobile number with the OTP we send';
     setErrors(found);
@@ -58,7 +54,7 @@ export default function SurveyPage({ kind }: { kind: keyof typeof FORMS }) {
     const website = (e.currentTarget.elements.namedItem('website') as HTMLInputElement | null)?.value ?? '';
     setBusy(true);
     try {
-      await submitForm(kind, { ...values, website, emailToken: verified.token, phoneToken: phoneVerified.token });
+      await submitForm(kind, { ...values, website, phoneToken: phoneVerified.token });
       setDone(true);
     } catch (err) {
       if (err instanceof FormError) {
@@ -115,21 +111,6 @@ export default function SurveyPage({ kind }: { kind: keyof typeof FORMS }) {
                     onChange={(v) => set(f.key, v)}
                     onVerified={(phone, token) => {
                       setPhoneVerified({ phone, token });
-                      setErrors((p) => ({ ...p, [f.key]: '' }));
-                    }}
-                  />
-                ) : f.type === 'email' ? (
-                  <EmailVerify
-                    key={f.key}
-                    id={`f-${f.key}`}
-                    label={f.label}
-                    labelHi={f.labelHi}
-                    value={values[f.key] as string}
-                    error={errors[f.key]}
-                    verifiedEmail={verified.email}
-                    onChange={(v) => set(f.key, v)}
-                    onVerified={(email, token) => {
-                      setVerified({ email, token });
                       setErrors((p) => ({ ...p, [f.key]: '' }));
                     }}
                   />

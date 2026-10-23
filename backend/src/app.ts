@@ -1,7 +1,6 @@
 import express, { type NextFunction, type Request, type Response } from 'express';
 import { getDb } from './db';
 import { FORM_KINDS, SCHEMAS, type FormKind } from './schemas';
-import { sendOtp, tokenValidFor, verifyOtp } from './otp';
 import { parseForm } from './validate';
 import { verifiedPhoneFromToken } from './firebase';
 
@@ -73,7 +72,6 @@ function limiter(max: number, windowMs = 60_000) {
   };
 }
 const submitLimit = limiter(10);
-const otpLimit = limiter(10);
 
 const app = express();
 app.set('trust proxy', Number(process.env.TRUST_PROXY ?? 1));
@@ -95,36 +93,6 @@ app.get('/api/health', async (_req, res) => {
   }
 });
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const cleanEmail = (v: unknown) => (typeof v === 'string' && v.length <= 200 && EMAIL_RE.test(v.trim()) ? v.trim().toLowerCase() : null);
-
-app.post('/api/email/send-code', otpLimit, async (req, res) => {
-  const email = cleanEmail(req.body?.email);
-  if (!email) return res.status(400).json({ error: 'Enter a valid email' });
-  try {
-    const r = await sendOtp(email);
-    if (!r.ok) return res.status(r.status).json({ error: r.error });
-    res.json({ ok: true });
-  } catch (err) {
-    console.error('otp.send', err instanceof Error ? err.message : err);
-    res.status(500).json({ error: 'Could not send the code. Please try again.' });
-  }
-});
-
-app.post('/api/email/verify-code', otpLimit, async (req, res) => {
-  const email = cleanEmail(req.body?.email);
-  const code = typeof req.body?.code === 'string' ? req.body.code.trim() : '';
-  if (!email || !/^\d{6}$/.test(code)) return res.status(400).json({ error: 'Enter the 6-digit code' });
-  try {
-    const r = await verifyOtp(email, code);
-    if (!r.ok) return res.status(r.status).json({ error: r.error });
-    res.json({ ok: true, token: r.token });
-  } catch (err) {
-    console.error('otp.verify', err instanceof Error ? err.message : err);
-    res.status(500).json({ error: 'Could not verify the code. Please try again.' });
-  }
-});
-
 app.post('/api/forms/:kind', submitLimit, async (req, res) => {
   const kind = req.params.kind as FormKind;
   if (!FORM_KINDS.includes(kind)) return res.status(404).json({ error: 'Unknown form' });
@@ -136,15 +104,11 @@ app.post('/api/forms/:kind', submitLimit, async (req, res) => {
   if (!parsed.ok) return res.status(400).json({ error: 'Please check the highlighted fields', fields: parsed.errors });
 
   try {
-    if (!tokenValidFor(req.body.emailToken, parsed.data.email as string)) {
-      return res.status(400).json({ error: 'Please verify your email address first', fields: { email: 'Verify your email' } });
-    }
     if ((await verifiedPhoneFromToken(req.body.phoneToken)) !== `+91${parsed.data.phone}`) {
       return res.status(400).json({ error: 'Please verify your mobile number first', fields: { phone: 'Verify your mobile number' } });
     }
     const { insertedId } = await getDb().collection(COLLECTIONS[kind]).insertOne({
       ...parsed.data,
-      emailVerified: true,
       phoneVerified: true,
       source: 'forms',
       createdAt: new Date(),
